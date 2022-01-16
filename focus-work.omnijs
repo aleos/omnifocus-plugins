@@ -20,11 +20,12 @@
         // https://omni-automation.com/plugins/simple.html
         
         const activeFolders = folders.filter(folder => folder.status === Folder.Status.Active);
-        const includeFolders = ['Employee', 'Maintenance'];
+        const includeFolders = ['Employee 👨🏻‍💻', 'Maintenance 🚀'];
         const foldersToFocus = activeFolders.filter(folder => includeFolders.includes(folder.name));
         
         const win = document.windows[0]
         if (foldersToFocus.length > 0) {
+            // There must be a better way to compare two arrays
             if (JSON.stringify(win.focus.map(folder => folder.name)) === JSON.stringify(foldersToFocus.map(folder => folder.name))) {
                 win.focus = null
             } else {
