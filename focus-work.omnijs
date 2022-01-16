@@ -1,0 +1,37 @@
+/*{
+    "author": "Alexander Ostrovsky",
+    "targets": ["omnifocus"],
+    "type": "action",
+    "identifier": "com.aleos.omnifocus.focus.work",
+    "version": "1.0",
+    "description": "Focus on work folders only",
+    "label": "Focus: Work",
+    "shortLabel": "Work",
+    "mediumLabel": "Focus: Work",
+    "paletteLabel": "Work",
+    "image": "building.2.crop.circle.fill",
+}*/
+
+(() => {
+    var action = new PlugIn.Action(function(selection) {
+        
+        // Useful links:
+        // https://omni-automation.com/omnifocus/index.html
+        // https://omni-automation.com/plugins/simple.html
+        
+        const activeFolders = folders.filter(folder => folder.status === Folder.Status.Active);
+        const includeFolders = ['Employee', 'Maintenance'];
+        const foldersToFocus = activeFolders.filter(folder => includeFolders.includes(folder.name));
+        
+        const win = document.windows[0]
+        if (foldersToFocus.length > 0) {
+            if (JSON.stringify(win.focus.map(folder => folder.name)) === JSON.stringify(foldersToFocus.map(folder => folder.name))) {
+                win.focus = null
+            } else {
+                win.focus = foldersToFocus
+            }
+        }
+    });
+    
+    return action;
+})();
